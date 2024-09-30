@@ -1,4 +1,4 @@
-# vibeCheck
+# vibeBuddies Server
 
 Link: [Link to this doc](#)
 
