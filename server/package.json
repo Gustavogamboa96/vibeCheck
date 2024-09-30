@@ -1,0 +1,24 @@
+{
+  "name": "vibe-check-server",
+  "version": "1.0.0",
+  "description": "Backend server for music review sharing application vibeCheck",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon ./app.js",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Gustavogamboa96/vibeCheck.git"
+  },
+  "author": "Luis Sierra Osorio, Nick Koffler, Gustavo Gamboa Malaver",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Gustavogamboa96/vibeCheck/issues"
+  },
+  "homepage": "https://github.com/Gustavogamboa96/vibeCheck#readme",
+  "dependencies": {
+    "express": "^4.21.0",
+    "nodemon": "^3.1.7"
+  }
+}
