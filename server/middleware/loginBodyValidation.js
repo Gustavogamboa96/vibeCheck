@@ -14,44 +14,47 @@ function loginBodyValidation(req, res, next) {
     // block to handle any incorrect data
     if (!username || !password || typeof username !== "string" || typeof password !== "string") {
 
-        let response = "";
+        let data = {};
 
         // block if both username and passwords are missing
         if (!username && !password) {
-            // constructing response
-            response = dataResponse(400, "fail", "username and password are required");
+            // constructing data
+            data.message = "username and password are required";
         }
         // block for missing username
         else if (!username) {
-            // constructing repsonse
-            response = dataResponse(400, "fail", "username is required");
+            // constructing data
+            data.message = "username is required";
         }
         // block for missing password
         else if (!password) {
-            // constructing repsonse
-            response = dataResponse(400, "fail", "password is required");
+            // constructing data
+            data.message = "password is required";
         }
 
         else if (typeof username !== "string" && typeof password !== "string") {
-            // constructing response
-            response = dataResponse(400, "fail", "invalid username and password types");
+            // constructing data
+            data.message = "invalid username and password types";
         }
         // block checks that params are valid strings
         else if (typeof username !== "string") {
-            // constructing response
-            response = dataResponse(400, "fail", "invalid username type");
+            // constructing data
+            data.message = "invalid username type";
         }
 
         // block checks that params are valid strings
         else if (typeof password !== "string") {
-            // constructing response
-            response = dataResponse(400, "fail", "invalid password type");
+            // constructing data
+            data.message = "invalid password type";
         }
+
+        // constructing response
+        response = dataResponse(400, "fail", data);
 
         // returning response
         return res.status(response.httpStatus).json({
             status: response.status,
-            message: response.message
+            data
         });
     }
 
