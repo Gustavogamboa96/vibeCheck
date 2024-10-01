@@ -37,11 +37,11 @@ async function getAllItems(){
     }
 }
 
-async function deleteItem(vibeCheckId) {
+async function deleteItem(vibe_check_id) {
     const command = new DeleteCommand({
         TableName,  
         Key: {
-            vibe_check_id: vibeCheckId  
+            vibe_check_id: vibe_check_id  
         },
         ReturnValues: "ALL_OLD"
     });
@@ -52,6 +52,48 @@ async function deleteItem(vibeCheckId) {
     } catch (error) {
         console.error("Error deleting item from DynamoDB:", error);
         throw new Error(error.message);
+    }
+}
+
+async function updateItemLikes(vibe_check_id){
+    const command = new UpdateCommand({
+        TableName,
+        Key: { vibe_check_id: vibe_check_id }, // Replace with your primary key
+        UpdateExpression: "SET likes = if_not_exists(likes, :start) + :incr", // Increment by 1
+        ExpressionAttributeValues: {
+            ":incr": 1,
+            ":start": 0, // Start from 0 if dislikes doesn't exist
+        },
+        ReturnValues: "UPDATED_NEW", // Optional: to get the updated item
+    });
+
+    try {
+        const data = await documentClient.send(command);
+        return data;
+    }catch(error){
+        console.error(error);
+        throw error; 
+    }
+}
+
+async function updateItemDislikes(vibe_check_id){
+    const command = new UpdateCommand({
+        TableName,
+        Key: { vibe_check_id: vibe_check_id }, // Replace with your primary key
+        UpdateExpression: "SET dislikes = if_not_exists(dislikes, :start) + :incr", // Increment by 1
+        ExpressionAttributeValues: {
+            ":incr": 1,
+            ":start": 0, // Start from 0 if dislikes doesn't exist
+        },
+        ReturnValues: "UPDATED_NEW", // Optional: to get the updated item
+    });
+
+    try {
+        const data = await documentClient.send(command);
+        return data;
+    }catch(error){
+        console.error(error);
+        throw error; 
     }
 }
 

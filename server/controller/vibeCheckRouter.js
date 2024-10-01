@@ -27,7 +27,7 @@ router.get("/", authenticateToken, async (req, res) => {
         res.status(401).json({message: error.message})
     }
 
-})
+});
 
 router.delete("/:id", authenticateToken, async (req, res) => {
     const user_id = 123456;
@@ -41,6 +41,11 @@ router.delete("/:id", authenticateToken, async (req, res) => {
         res.status(401).json({message: error.message})
     }
 
-})
+});
+
+
+router.patch("/:id/:like-or-dislike", async (req, res) => {
+
+});
 
 module.exports = router;

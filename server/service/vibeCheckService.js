@@ -38,5 +38,9 @@ async function deleteVibeCheck(user_id, vibe_check_id){
         throw new Error('No user_id was passed, might have to refresh session')
     }
 }
+//TODO
+async function likeOrDislike(vibe_check_id, type) {
+    
+}
 
 module.exports = {createVibeCheck, getVibeChecks,  deleteVibeCheck};
