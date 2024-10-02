@@ -20,6 +20,10 @@ async function createVibeCheck(user_id, track_id, review, rating) {
     }
 }
 
+async function getVibeCheckById(vibe_check_id){
+    
+}
+
 async function getAllVibeChecks(user_id) {
     if(user_id){
         return dao.getAllItems();
@@ -58,4 +62,4 @@ async function likeOrDislike(user_id, vibe_check_id, type) {
     }
 }
 
-module.exports = {createVibeCheck, getAllVibeChecks,  deleteVibeCheck, likeOrDislike};
+module.exports = {createVibeCheck, getVibeCheckById, getAllVibeChecks, deleteVibeCheck, likeOrDislike};

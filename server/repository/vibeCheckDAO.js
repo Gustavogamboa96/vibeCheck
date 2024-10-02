@@ -97,6 +97,24 @@ async function updateItemDislikes(vibe_check_id){
     }
 }
 
-//TODO getItemById
+//getItemById
+async function getItemById(vibe_check_id) {
+    const command = new GetCommand({
+        TableName,
+        Key: {
+            "vibe_check_id": vibe_check_id
+            }
+    });
 
-module.exports = {getAllItems, addItem, deleteItem, updateItemLikes, updateItemDislikes};
+    try {
+        const data = await documentClient.send(command);
+        return data.Item;
+    } catch (err) {
+        console.error("Error querying items:", err);
+        throw err;
+    }
+}
+
+
+
+module.exports = {getItemById, getAllItems, addItem, deleteItem, updateItemLikes, updateItemDislikes};
