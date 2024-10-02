@@ -8,7 +8,7 @@ async function createVibeCheck(user_id, track_id, review, rating) {
         if(review.trim() == ''){
             throw new Error("Review can't be empty");
         }
-        if(rating < 0 || rating > 6){
+        if(rating < 0 || rating >= 6){
             throw new Error("Rating has to be 1-5");
         }
         const vibe_check_id = uuid.v4();
@@ -20,7 +20,7 @@ async function createVibeCheck(user_id, track_id, review, rating) {
     }
 }
 
-async function getVibeChecks(user_id) {
+async function getAllVibeChecks(user_id) {
     if(user_id){
         return dao.getAllItems();
     }else{
@@ -38,9 +38,24 @@ async function deleteVibeCheck(user_id, vibe_check_id){
         throw new Error('No user_id was passed, might have to refresh session')
     }
 }
-//TODO
-async function likeOrDislike(vibe_check_id, type) {
-    
+
+async function likeOrDislike(user_id, vibe_check_id, type) {
+    if(user_id){
+        if(vibe_check_id.trim() == ''){
+            throw new Error("vibe_check_id can't be empty");
+        }
+        if(type !== 'like' && type !== 'dislike' ){
+            throw new Error("type must be like or dislike");
+        }
+        if(type.trim() == "like"){
+            return dao.updateItemLikes(vibe_check_id);
+        }
+        if(type.trim() == "dislike"){
+            return dao.updateItemDislikes(vibe_check_id);
+        }
+    }else{
+        throw new Error('No user_id was passed, might have to refresh session')
+    }
 }
 
-module.exports = {createVibeCheck, getVibeChecks,  deleteVibeCheck};
+module.exports = {createVibeCheck, getAllVibeChecks,  deleteVibeCheck, likeOrDislike};
