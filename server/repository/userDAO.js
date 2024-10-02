@@ -28,6 +28,10 @@ async function getUserByUsername(username) {
 }
 
 async function createUser(user) {
+  /**
+   * repository layer function to handle creating a new user
+   */
+
   const command = new PutCommand({
     TableName: "users_table",
     Item: user,
