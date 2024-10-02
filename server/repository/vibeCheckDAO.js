@@ -97,4 +97,6 @@ async function updateItemDislikes(vibe_check_id){
     }
 }
 
-module.exports = {getAllItems, addItem, deleteItem};
+//TODO getItemById
+
+module.exports = {getAllItems, addItem, deleteItem, updateItemLikes, updateItemDislikes};
