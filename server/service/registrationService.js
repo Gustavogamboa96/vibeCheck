@@ -9,8 +9,8 @@ async function register(username, age, email, password) {
 
     // checks results of query to see if username already exists
     if (returnedUser && returnedUser.Count > 0) {
-      console.log("username already taken")
-      return { status: 400, message: "Username already taken" }
+      console.log("Username already taken")
+      return { status: 401, message: "Username already taken" }
     } else {
       // checks if all fields present
       if (!username || !email || !password || !age) {
@@ -23,7 +23,7 @@ async function register(username, age, email, password) {
       if (username.length < 7 || username.length == 0) {
         return {
           status: 400,
-          message: "username must be at least 7 characters",
+          message: "Username must be at least 7 characters",
         }
       } else if (username.length > 25) {
         return {
