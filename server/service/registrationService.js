@@ -55,7 +55,7 @@ async function register(username, age, email, password) {
       //if req.body is valid then function will attempt to generate user awaiting the creatUser function from userDAO
       try {
         const saltRounds = 10
-        let hashedPassword = await bcrypt.hash(password, saltRounds)
+        let hashedPassword = await bcrypt.hashSync(password, saltRounds)
         let unique_key = uuidv4()
         let data = await userDAO.createUser({
           username,
