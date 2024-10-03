@@ -1,4 +1,4 @@
-const { register } = require("../service/registrationService")
+const { register } = require("../services/registrationService")
 const { errorResponse } = require("../utils/errorResponse")
 
 async function registrationController(req, res) {
