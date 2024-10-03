@@ -1,12 +1,12 @@
-const express = require("express")
-const accounts = require("./routes/accountsRoute")
-const PORT = process.env.PORT || 3000
+const express = require('express');
 
-const app = express()
+const PORT = process.env.PORT || 3000;
 
-app.use(express.json())
-app.use("/accounts", accounts)
+const app = express();
+
+app.use(express.json());
+
 
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`)
-})
+  console.log(`Server is running on port which is ${PORT}`);
+});
