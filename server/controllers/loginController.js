@@ -18,7 +18,7 @@ async function loginController(req, res) {
         const response = await login(username, password);
 
         // responding to client with object data
-        res.status(response.httpStatus).json({
+        return res.status(response.httpStatus).json({
             status: response.status,
             ...(response.data && { data: response.data })
         });
