@@ -20,9 +20,9 @@ async function createVibeCheck(user_id, track_id, review, rating) {
     }
 }
 
-// async function getVibeCheckById(vibe_check_id){
+async function getVibeCheckById(vibe_check_id){
 
-// }
+}
 
 async function getAllVibeChecks(user_id) {
     if(user_id){

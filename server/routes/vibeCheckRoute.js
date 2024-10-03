@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const authenticateToken = require('../middleware/authenticateToken');
-const vibeCheckController = require("../controller/vibeCheckController");
+const vibeCheckController = require("../controllers/vibeCheckController");
 
 
 router.post("/", authenticateToken, vibeCheckController.createVibeCheckController)
