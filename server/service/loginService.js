@@ -28,7 +28,7 @@ async function login(username, password) {
         const databasePassword = returnedUsers.Items[0].password;
 
         // block checks if passwords do NOT match
-        if (!bcrypt.compareSync(databasePassword, password)) {
+        if (!bcrypt.compareSync(password, databasePassword)) {
             data.message = "Username and/or Password do not match!"
             return dataResponse(401, "fail", data);
         }
@@ -41,7 +41,7 @@ async function login(username, password) {
         });
 
         // creating token with user info, newData should be an array of a single object
-        let token = jwt.sign(newData[0], process.env.SECRET_KEY, {
+        let token = jwt.sign(newData[0], process.env.TOKEN_SECRET_KEY, {
             expiresIn: "1d"
         })
 
