@@ -4,7 +4,6 @@ const { QueryCommand, PutCommand } = require("@aws-sdk/lib-dynamodb")
 async function getUserByUsername(username) {
   /**
    * repository layer function to handle the querying of a user by username
-   *
    * username - string
    */
 

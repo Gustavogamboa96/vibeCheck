@@ -1,19 +1,12 @@
 const express = require("express")
 const router = express.Router()
 
-// layers
-const { loginController } = require("../controller/loginController")
-const {
-  registrationController,
-} = require("../controller/registrationController")
+// controller layer functions
+const { updateProfile } = require("../controllers/updateProfileController");
 
-// middleware
-const { loginBodyValidation } = require("../middleware/loginBodyValidation")
-const {
-  registrationBodyValidation,
-} = require("../middleware/registrationBodyValidation")
+// route to handle the updating of user info for the profile (not password), protected route
+router.patch("/users/:userId", updateProfile);
 
-router.post("/login", loginBodyValidation, loginController)
-router.post("/register", registrationBodyValidation, registrationController)
+
 
 module.exports = router

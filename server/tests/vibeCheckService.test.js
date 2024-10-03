@@ -1,6 +1,6 @@
-const dao = require('../repository/vibeCheckDAO');
+const dao = require('../repositories/vibeCheckDAO');
 const uuid = require('uuid');
-const { createVibeCheck, getAllVibeChecks, deleteVibeCheck, likeOrDislike } = require('../service/vibeCheckService');
+const { createVibeCheck, getAllVibeChecks, deleteVibeCheck, likeOrDislike } = require('../services/vibeCheckService');
 
 // Mocking DAO and UUID
 jest.mock('../repository/vibeCheckDAO');
