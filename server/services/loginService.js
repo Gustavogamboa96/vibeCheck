@@ -1,5 +1,5 @@
 const { dataResponse } = require("../utils/dataResponse");
-const userDAO = require("../repository/userDAO");
+const userDAO = require("../repositories/userDAO");
 const jwt = require("jsonwebtoken");
 const bcrypt = require('bcrypt');
 require("dotenv").config()
