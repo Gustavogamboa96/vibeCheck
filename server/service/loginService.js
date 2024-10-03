@@ -41,7 +41,7 @@ async function login(username, password) {
         });
 
         // creating token with user info, newData should be an array of a single object
-        let token = jwt.sign(newData[0], process.env.SECRET_KEY, {
+        let token = jwt.sign(newData[0], process.env.TOKEN_SECRET_KEY, {
             expiresIn: "1d"
         })
 
