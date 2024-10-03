@@ -1,4 +1,4 @@
-const { login } = require("../service/loginService");
+const { login } = require("../services/loginService");
 const { errorResponse } = require("../utils/errorResponse");
 
 async function loginController(req, res) {

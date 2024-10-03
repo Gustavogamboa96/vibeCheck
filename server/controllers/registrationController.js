@@ -1,6 +1,6 @@
 const express = require("express")
 const registerRouter = express.Router()
-const { addUser } = require("../service/registrationService")
+const { addUser } = require("../services/registrationService")
 
 registerRouter.post("/", async (req, res) => {
   const { username, age, email, password } = req.body
