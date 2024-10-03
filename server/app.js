@@ -12,7 +12,9 @@ const { loginBodyValidation } = require("./middleware/loginBodyValidation");
 // middleware
 app.use(express.json());
 app.use("/accounts", accounts);
-app.use("/register", registerRouter);
+
+// route for register
+app.post("/register", registerRouter);
 
 // route to handle the log in
 app.post("/login", loginBodyValidation, loginController);
