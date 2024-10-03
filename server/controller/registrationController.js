@@ -1,20 +1,39 @@
-const express = require("express")
-const registerRouter = express.Router()
-const registrationController = require("../service/registrationService")
+const { register } = require("../service/registrationService")
+const { errorResponse } = require("../utils/errorResponse")
 
-registerRouter.post("/", async (req, res) => {
+async function registrationController(req, res) {
+  /**
+   * controller function to handle the logging in feature
+   *
+   * username - required body param, validated and sanitized with middelware (loginBodyValidation.js)
+   * age - required body param, validated and sanitized with middelware (loginBodyValidation.js)
+   * email - required body param, validated and sanitized with middelware (loginBodyValidation.js)
+   * password - required body param, validated and sanitized with middelware (loginBodyValidation.js)
+   */
+
+  // destructuring params
   const { username, age, email, password } = req.body
 
-  const result = await registrationController.register(
-    username,
-    age,
-    email,
-    password
-  )
+  // try/catch block for async calls
+  try {
+    // calling our service layer function, returns an object
+    const response = await register(username, age, email, password)
 
-  return res
-    .status(result.status)
-    .json({ message: result.message, user: result.user })
-})
+    // responding to client with object data
+    res.status(response.httpStatus).json({
+      status: response.status,
+      ...(response.data && { data: response.data }),
+    })
+  } catch (error) {
+    console.log(error.message)
+    const response = errorResponse(
+      500,
+      "Internal server error during registration"
+    )
+    res.status(response.httpStatus).json({
+      message: response.message,
+    })
+  }
+}
 
-module.exports = registerRouter
+module.exports = { registrationController }
