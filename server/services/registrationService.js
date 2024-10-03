@@ -1,4 +1,4 @@
-const { createUser } = require("../repository/registrationDAO")
+const { createUser } = require("../repositories/registrationDAO")
 const { v4: uuidv4 } = require("uuid")
 
 async function addUser(username, age, email, password) {
