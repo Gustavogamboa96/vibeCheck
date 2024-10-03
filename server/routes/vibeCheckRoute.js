@@ -8,6 +8,8 @@ router.post("/", authenticateToken, vibeCheckController.createVibeCheckControlle
 
 router.get("/", authenticateToken, vibeCheckController.getAllVibeChecksController);
 
+router.get("/:id", authenticateToken, vibeCheckController.getVibeCheckByIdController);
+
 router.delete("/:id", authenticateToken, vibeCheckController.deleteVibeCheckController);
 
 router.patch("/:id/:likeordislike", authenticateToken, vibeCheckController.likeOrDislikeController);
