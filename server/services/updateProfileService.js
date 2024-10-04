@@ -1,14 +1,22 @@
-const dataResponse = require("../utils/dataResponse");
+const { dataResponse } = require("../utils/dataResponse");
+const usersDAO = require("../repositories/usersDAO");
 
-async function updateProfile(dataBody) {
+async function updateProfile(dataToUpdate, dataToDelete) {
     /**
      * service layer function to handle the 
      */
+    try {
 
-    const data = {};
+        // data object to return to controller layer
+        const data = {};
 
-    data.message = "all good broh"
-    return dataResponse(200, "success", data);
+        const response = await usersDAO.updateProfile();
+
+        data.message = "all good broh"
+        return dataResponse(200, "success", data);
+    } catch (error) {
+
+    }
 }
 
 
