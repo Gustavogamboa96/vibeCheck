@@ -15,7 +15,7 @@ async function updateProfile(dataToUpdate, dataToDelete) {
         data.message = "all good broh"
         return dataResponse(200, "success", data);
     } catch (error) {
-
+        throw new Error(error.message);
     }
 }
 

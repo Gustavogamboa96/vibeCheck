@@ -15,8 +15,6 @@ async function updateProfile(req, res) {
         const { ...dataToUpdate } = req.dataToUpdate;
         const { ...dataToDelete } = req.dataToDelete;
 
-        console.log(dataToUpdate);
-
         // passing info into our service layer funciton
         const response = await updateProfileService(dataToUpdate, dataToDelete);
 
