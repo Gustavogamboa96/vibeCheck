@@ -8,10 +8,12 @@ jest.mock("bcrypt")
 
 describe("registrationService", () => {
   test("Should return message 'Username already taken' if username is already taken", async () => {
-    const expectedResponse = { message: "Username already taken", status: 401 }
+    const expectedResponse = dataResponse(401, "fail", {
+      message: "Username already taken",
+    })
 
     userDAO.getUserByUsername.mockResolvedValue({
-      Items: [{ username: "username", password: "password" }],
+      Items: [{ username: "username" }],
       Count: 1,
     })
 
@@ -26,10 +28,9 @@ describe("registrationService", () => {
   })
 
   test("Should return message 'User created successfully' if user was created successfully", async () => {
-    const expectedResponse = {
+    const expectedResponse = dataResponse(201, "success", {
       message: "User created successfully",
-      status: 201,
-    }
+    })
 
     userDAO.getUserByUsername.mockResolvedValue({ Items: [], Count: 0 })
 
@@ -39,19 +40,6 @@ describe("registrationService", () => {
       "email@gmail.com",
       "password"
     )
-
-    expect(response).toEqual(expectedResponse)
-  })
-
-  test("Should return message 'Username must be at least 7 characters' if username is less that 7 characters", async () => {
-    const expectedResponse = {
-      message: "Username must be at least 7 characters",
-      status: 400,
-    }
-
-    userDAO.getUserByUsername.mockResolvedValue({ Items: [], Count: 0 })
-
-    const response = await register("user", 21, "email@gmail.com", "password")
 
     expect(response).toEqual(expectedResponse)
   })

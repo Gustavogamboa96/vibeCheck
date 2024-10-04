@@ -1,3 +1,14 @@
 /node_modules
 
 .env
+
+/app.log
+
+/error.log
+
+/warn.log
+
+/exceptions.log
+
+/rejections.log
+
