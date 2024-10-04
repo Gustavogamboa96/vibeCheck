@@ -1,0 +1,22 @@
+2024-10-04 11:30:16 [error]: Failed to update vibeCheck's likes/dislikes: Invalid UpdateExpression: Syntax error; token: "SET", near: ", SET liked_by"
+2024-10-04 11:31:23 [error]: Failed to update vibeCheck's likes/dislikes: Invalid UpdateExpression: Incorrect number of operands for operator or function; operator or function: list_append, number of operands: 1
+2024-10-04 11:36:30 [error]: Failed to update vibeCheck's likes/dislikes: Invalid UpdateExpression: An expression attribute name used in the document path is not defined; attribute name: #attrArray
+2024-10-04 11:37:00 [error]: Failed to update vibeCheck's likes/dislikes: Invalid UpdateExpression: An expression attribute value used in expression is not defined; attribute value: :empty_list
+2024-10-04 11:37:04 [error]: Failed to update vibeCheck's likes/dislikes: Invalid UpdateExpression: An expression attribute value used in expression is not defined; attribute value: :empty_list
+2024-10-04 11:45:42 [error]: Failed to update vibeCheck's likes/dislikes: add_to_list is not defined
+2024-10-04 11:49:30 [error]: Failed to update vibeCheck's likes/dislikes: Invalid UpdateExpression: Syntax error; token: ":addtolist", near: ":incr :addtolist"
+2024-10-04 11:58:49 [error]: Failed to update vibeCheck's likes/dislikes: Invalid UpdateExpression: Incorrect operand type for operator or function; operator or function: +, operand type: S
+2024-10-04 12:05:24 [error]: Failed to update vibeCheck's likes/dislikes: Invalid UpdateExpression: Incorrect operand type for operator or function; operator or function: +, operand type: S
+2024-10-04 12:05:48 [error]: Failed to update vibeCheck's likes/dislikes: Invalid UpdateExpression: Incorrect operand type for operator or function; operator or function: +, operand type: S
+2024-10-04 12:06:16 [error]: Failed to update vibeCheck's likes/dislikes: Cannot read properties of null (reading 'Attributes')
+2024-10-04 12:07:39 [error]: Failed to update vibeCheck's likes/dislikes: Invalid UpdateExpression: Incorrect operand type for operator or function; operator or function: list_append, operand type: S
+2024-10-04 12:08:22 [error]: Failed to update vibeCheck's likes/dislikes: Invalid UpdateExpression: Incorrect operand type for operator or function; operator or function: list_append, operand type: S
+2024-10-04 12:08:25 [error]: Failed to update vibeCheck's likes/dislikes: Invalid UpdateExpression: Incorrect operand type for operator or function; operator or function: list_append, operand type: S
+2024-10-04 12:08:42 [error]: Failed to update vibeCheck's likes/dislikes: Invalid UpdateExpression: Incorrect operand type for operator or function; operator or function: list_append, operand type: S
+2024-10-04 12:23:16 [error]: Failed to update vibeCheck's likes/dislikes: Invalid UpdateExpression: Invalid function name; function: list_remove
+2024-10-04 12:25:06 [error]: Failed to update vibeCheck's likes/dislikes: Invalid UpdateExpression: Invalid function name; function: list_remove
+2024-10-04 12:47:29 [error]: Failed to update vibeCheck's likes/dislikes: value is not defined
+2024-10-04 12:56:49 [error]: Failed to update vibeCheck's likes/dislikes: Cannot read properties of undefined (reading 'liked_by')
+2024-10-04 12:56:49 [error]: Failed to update vibeCheck's likes/dislikes: Cannot read properties of undefined (reading 'liked_by')
+2024-10-04 13:00:06 [error]: Failed to update vibeCheck's likes/dislikes: Cannot read properties of undefined (reading 'liked_by')
+2024-10-04 13:00:06 [error]: Failed to update vibeCheck's likes/dislikes: Cannot read properties of undefined (reading 'liked_by')

@@ -1,5 +1,5 @@
 // dependencies
-const userDAO = require("../repository/userDAO");
+const userDAO = require("../repositories/userDAO");
 const jwt = require("jsonwebtoken");
 const { login } = require("../service/loginService");
 const { dataResponse } = require("../utils/dataResponse");

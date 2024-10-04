@@ -1,4 +1,4 @@
-const userDAO = require("../repository/userDAO")
+const userDAO = require("../repositories/userDAO")
 const { register } = require("../service/registrationService")
 const { dataResponse } = require("../utils/dataResponse")
 const bcrypt = require("bcrypt")

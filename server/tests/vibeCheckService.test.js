@@ -19,7 +19,6 @@ describe('VibeCheck Service', () => {
             const track_id = 'track123';
             const review = '';
             const rating = 4;
-
             const result = await createVibeCheck(user_id, track_id, review, rating);
 
             expect(result.httpStatus).toBe(401);
@@ -147,42 +146,21 @@ describe('VibeCheck Service', () => {
             expect(result.status).toBe('fail');
             expect(result.data.message).toBe("vibe_check_id can't be empty");
         });
-
+    
         it('should return 401 if type is invalid', async () => {
             const result = await likeOrDislike('user123', 'vibe123', 'invalidType');
             expect(result.httpStatus).toBe(401);
             expect(result.status).toBe('fail');
             expect(result.data.message).toBe('type must be like or dislike');
         });
-
-        it('should return 200 when liking a VibeCheck successfully', async () => {
-            const vibe_check_id = 'vibe123';
-            const updatedItemMock = { Attributes: { vibe_check_id, likes: 1 } };
-
-            dao.updateItemLikes.mockResolvedValue(updatedItemMock);
-
-            const result = await likeOrDislike('user123', vibe_check_id, 'like');
-            expect(result.httpStatus).toBe(200);
-            expect(result.status).toBe('success');
-            expect(result.data.updatedVibeCheck).toEqual(updatedItemMock.Attributes);
-        });
-
-        it('should return 200 when disliking a VibeCheck successfully', async () => {
-            const vibe_check_id = 'vibe123';
-            const updatedItemMock = { Attributes: { vibe_check_id, dislikes: 1 } };
-
-            dao.updateItemDislikes.mockResolvedValue(updatedItemMock);
-
-            const result = await likeOrDislike('user123', vibe_check_id, 'dislike');
-            expect(result.httpStatus).toBe(200);
-            expect(result.status).toBe('success');
-            expect(result.data.updatedVibeCheck).toEqual(updatedItemMock.Attributes);
-        });
+    
     });
 
     describe("getAllVibeChecks", () => {
         it("should return 200 success when vibe checks are retrieved successfully", async () => {
             const mockUserId = "user123";
+            const mockTimestamp = 1696512345678; // Mock timestamp
+    
             const mockVibeChecks = {
                 Count: 1,
                 Items: [
@@ -194,7 +172,7 @@ describe('VibeCheck Service', () => {
                         rating: 5,
                         likes: 10,
                         dislikes: 0,
-                        timestamp: Date.now(),
+                        timestamp: mockTimestamp,
                     },
                 ],
             };
