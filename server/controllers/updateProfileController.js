@@ -1,4 +1,5 @@
 const { updateProfile: updateProfileService } = require("../services/updateProfileService.js");
+const { errorResponse } = require("../utils/errorResponse.js");
 
 async function updateProfile(req, res) {
     /**
@@ -10,14 +11,19 @@ async function updateProfile(req, res) {
 
 
     try {
-        // just getting all the data from the body (I do not know what the user would like to change/add) 
-        const { ...updatedData } = req.body;
+        // destructuring required fields
+        const { ...dataToUpdate } = req.dataToUpdate;
+        const { ...dataToDelete } = req.dataToDelete;
+        // const { ...userData } = req.user;
 
-        // this is should be stored in the req by the jwt authentication middle ware function
-        // const { username, userId, userId } = req.user;
+        const userData = {
+            userId: "0e7ba505-b2c1-4889-a325-f19e27171be2",
+            username: "testUsername",
+            email: "testEmail@gmail.com"
+        };
 
         // passing info into our service layer funciton
-        const response = await updateProfileService(updatedData);
+        const response = await updateProfileService(userData, dataToUpdate, dataToDelete);
 
         return res.status(response.httpStatus).json({
             status: response.status,
@@ -27,14 +33,10 @@ async function updateProfile(req, res) {
     } catch (error) {
         console.log(error.message);
         const response = errorResponse(500, "Internal server error during profile update");
-        res.status(response.httpStatus).json({
+        return res.status(response.httpStatus).json({
             message: response.message
         });
     }
-
-
-
-    return res.status(200).json({ message: "all good" });
 }
 
 

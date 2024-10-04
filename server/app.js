@@ -13,7 +13,7 @@ app.use("/vibe-checks", vibeCheck);
 // middleware
 
 app.use("", authentication)
-app.use("/accounts", accounts);
+app.use("/users", accounts);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`)
