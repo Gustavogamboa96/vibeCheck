@@ -5,13 +5,17 @@ const bcrypt = require("bcrypt")
 
 async function register(username, age, email, password) {
     try {
+
+        // made data
+        const data = {};
+
         // awaits getUserByUsername query
         const returnedUser = await userDAO.getUserByUsername(username)
 
         // checks results of query to see if username already exists
         if (returnedUser && returnedUser.Count > 0) {
             data.message = "Username already taken"
-            return dataResponse(401, "fail", data)
+            return dataResponse(401, "fail", data);
         } else {
             //if req.body is valid then function will attempt to generate user awaiting the creatUser function from userDAO
             try {

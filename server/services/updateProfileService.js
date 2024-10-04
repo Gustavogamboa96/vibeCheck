@@ -10,6 +10,11 @@ async function updateProfile(dataToUpdate, dataToDelete) {
         // data object to return to controller layer
         const data = {};
 
+        // querying user by id using repository layer function to make sure user exist and data matches
+        const returnedUser = await usersDAO.findUserById("0e7ba505-b2c1-4889-a325-f19e27171be2");
+
+        console.log(returnedUser);
+
         const response = await usersDAO.updateProfile();
 
         data.message = "all good broh"

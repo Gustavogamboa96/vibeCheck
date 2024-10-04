@@ -1,9 +1,9 @@
-const userDAO = require("../repository/userDAO")
-const { register } = require("../service/registrationService")
+const userDAO = require("../repositories/userDAO")
+const { register } = require("../services/registrationService")
 const { dataResponse } = require("../utils/dataResponse")
 const bcrypt = require("bcrypt")
 
-jest.mock("../repository/userDAO")
+jest.mock("../repositories/userDAO")
 jest.mock("bcrypt")
 
 describe("registrationService", () => {

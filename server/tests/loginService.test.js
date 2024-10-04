@@ -1,12 +1,12 @@
 // dependencies
-const userDAO = require("../repository/userDAO");
+const userDAO = require("../repositories/userDAO");
 const jwt = require("jsonwebtoken");
-const { login } = require("../service/loginService");
+const { login } = require("../services/loginService");
 const { dataResponse } = require("../utils/dataResponse");
 const bcrypt = require('bcrypt');
 
 // mocks
-jest.mock("../repository/userDAO");
+jest.mock("../repositories/userDAO");
 jest.mock("jsonwebtoken");
 jest.mock("bcrypt");
 
