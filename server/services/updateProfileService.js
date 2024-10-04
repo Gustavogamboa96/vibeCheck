@@ -1,7 +1,7 @@
 const { dataResponse } = require("../utils/dataResponse");
 const usersDAO = require("../repositories/usersDAO");
 
-async function updateProfile(dataToUpdate, dataToDelete) {
+async function updateProfile(userData, dataToUpdate, dataToDelete) {
     /**
      * service layer function to handle the 
      */
@@ -11,11 +11,27 @@ async function updateProfile(dataToUpdate, dataToDelete) {
         const data = {};
 
         // querying user by id using repository layer function to make sure user exist and data matches
-        const returnedUser = await usersDAO.findUserById("0e7ba505-b2c1-4889-a325-f19e27171be2");
+        const returnedUser = await usersDAO.findUserById(userData.userId);
 
-        console.log(returnedUser);
+        // block checks if user does not exists
+        if (returnedUser.Count === 0) {
+            data.message = "invalid user - user does not exist";
+            return dataResponse(400, "fail", data);
+        }
 
-        const response = await usersDAO.updateProfile();
+        // block checks if more than 1 user was returned
+        if (returnedUser.Count > 1) {
+            data.message = "error - more than 1 user found";
+            return dataResponse(400, "fail", data);
+        }
+
+        //  block compares username and emails in db with information provided by JWT
+        if (userData.email !== returnedUser.Items[0].email || userData.username !== returnedUser.Items[0].username) {
+            data.message = "JWT email/username did not match with stored email/username";
+            return dataResponse(400, 'fail', data);
+        }
+
+        const response = await usersDAO.updateProfile(userData.userId, dataToUpdate, dataToDelete);
 
         data.message = "all good broh"
         return dataResponse(200, "success", data);
