@@ -12,7 +12,8 @@ const TableName = "vibe_checks_table";
 async function addItem(vibeCheck){
     const command = new PutCommand({
         TableName,
-        Item: vibeCheck
+        Item: vibeCheck,
+        ReturnValues: "ALL_OLD"
     });
     try {
         const data = await documentClient.send(command);
@@ -30,7 +31,7 @@ async function getAllItems(){
     })
     try {
         const data = await documentClient.send(command);
-        return data.Items;
+        return data;
     } catch (err) {
         console.error(err);
         throw err; 
@@ -48,7 +49,7 @@ async function deleteItem(vibe_check_id) {
     try {
         const data = await documentClient.send(command);
         // console.log("Deleted item:", data.Attributes);
-        return data.Attributes ? data.Attributes : { message: "Item deleted successfully" };
+        return data;
     } catch (error) {
         console.error("Error deleting item from DynamoDB:", error);
         throw new Error(error.message);
@@ -108,7 +109,7 @@ async function getItemById(vibe_check_id) {
 
     try {
         const data = await documentClient.send(command);
-        return data.Item;
+        return data;
     } catch (err) {
         console.error("Error querying items:", err);
         throw err;

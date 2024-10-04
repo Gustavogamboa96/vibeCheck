@@ -1,6 +1,7 @@
 const { dataResponse } = require("../utils/dataResponse");
 const dao = require("../repositories/vibeCheckDAO");
 const uuid = require('uuid');
+const logger = require("../utils/logger");
 
 async function createVibeCheck(user_id, track_id, review, rating) {
     try{
@@ -16,25 +17,28 @@ async function createVibeCheck(user_id, track_id, review, rating) {
                 data.message = "Rating has to be 1-5";
                 return dataResponse(401, "fail", data);
             }
-            //comeback to this when get by id ready
+            
             const vibe_check_id = uuid.v4();
             const timestamp = Date.now();
             const vibeCheck = {vibe_check_id, user_id, track_id, review, rating, likes: 0, dislikes: 0, timestamp};
-            const createdVibeCheck = await dao.addItem(vibeCheck);
+            await dao.addItem(vibeCheck);
             const newlyCreatedVibeCheck = await getVibeCheckById(user_id, vibe_check_id); 
             
-            if(!newlyCreatedVibeCheck.Item){
-                data.message = "New VibeCheck couldn't be retrieve possibly not created";
-                return dataResponse(401, "fail", data);
+            if(newlyCreatedVibeCheck){
+                data.newlyCreatedVibeCheck = vibeCheck;
+                return dataResponse(200, "success", data);
             }
-            data.newlyCreatedVibeCheck = createdVibeCheck.Item;
-            return dataResponse(200, "success", data);
+            data.message = "New VibeCheck couldn't be retrieve possibly not created";
+            return dataResponse(401, "fail", data);
 
         }else{
             data.message = 'No user_id was passed, might have to refresh session';
             return dataResponse(401, "fail", data);
         }
     }catch(error){
+        logger.error(`Failed to create vibeCheck: ${error.message}`, {
+            stack: error.stack,
+        });
         throw new Error(error.message);
     }
 }
@@ -43,11 +47,11 @@ async function getVibeCheckById(user_id, vibe_check_id){
     try{
         const data = {};
         if(user_id){
-            if(vibe_check_id.trim() == ''){
+            if(vibe_check_id == ''){
                 data.message = "vibe_check_id can't be empty";
                 return dataResponse(401, "fail", data);
             }
-            const returnedVibeCheck = await getVibeCheckById(vibe_check_id);
+            const returnedVibeCheck = await dao.getItemById(vibe_check_id);
             if(!returnedVibeCheck.Item){
                 data.message = "Couldn't get vibeCheck";
                 return dataResponse(401, "fail", data);
@@ -59,6 +63,9 @@ async function getVibeCheckById(user_id, vibe_check_id){
             return dataResponse(401, "fail", data);
         }
     }catch(error){
+        logger.error(`Failed to get vibeCheck by ID: ${error.message}`, {
+            stack: error.stack,
+        });
         throw new Error(error.message);
     }
 
@@ -80,6 +87,9 @@ async function getAllVibeChecks(user_id) {
             return dataResponse(401, "fail", data);
         }
     }catch(error){
+        logger.error(`Failed to get all vibeChecks: ${error.message}`, {
+            stack: error.stack,
+        });
         throw new Error(error.message);
     }
 }
@@ -104,6 +114,9 @@ async function deleteVibeCheck(user_id, vibe_check_id){
             return dataResponse(401, "fail", data);
         }
     }catch(error){
+        logger.error(`Failed to delete vibeCheck: ${error.message}`, {
+            stack: error.stack,
+        });
         throw new Error(error.message);
     }
 }
@@ -146,6 +159,9 @@ async function likeOrDislike(user_id, vibe_check_id, type) {
             return dataResponse(401, "fail", data);
         }
     }catch(error){
+        logger.error(`Failed to update vibeCheck's likes/dislikes: ${error.message}`, {
+            stack: error.stack,
+        });
         throw new Error(error.message);
     }
 }
