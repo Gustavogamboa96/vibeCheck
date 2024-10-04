@@ -5,7 +5,7 @@ const router = express.Router()
 const { updateProfile } = require("../controllers/updateProfileController");
 
 // middleware
-const { dataValidation } = require("../middleware/updateProfileDataValidation")
+const { dataValidation } = require("../middleware/updateProfileDataValidation");
 
 // route to update profile, expects body with info, protected route
 router.patch("/:userId", dataValidation, updateProfile);

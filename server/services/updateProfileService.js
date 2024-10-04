@@ -1,5 +1,5 @@
 const { dataResponse } = require("../utils/dataResponse");
-const usersDAO = require("../repositories/usersDAO");
+const usersDAO = require("../repositories/userDAO");
 
 async function updateProfile(userData, dataToUpdate, dataToDelete) {
     /**
@@ -31,7 +31,9 @@ async function updateProfile(userData, dataToUpdate, dataToDelete) {
             return dataResponse(400, 'fail', data);
         }
 
-        const response = await usersDAO.updateProfile(userData.userId, dataToUpdate, dataToDelete);
+
+        const response = await usersDAO.updateProfile(userData.username, dataToUpdate, dataToDelete);
+        console.log(response);
 
         data.message = "all good broh"
         return dataResponse(200, "success", data);

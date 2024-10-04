@@ -17,14 +17,14 @@ function dataValidation(req, res, next) {
     // destructuring bodyData which are values that can be changed
     const { username, password, firstName, lastName, age, email, ...bodyData } = req.body;;
 
-    // block capitalizes the first letter of every word for city if it is defined
-    bodyData.city = bodyData.city ? capitalizeFirstLetterEveryWord(bodyData.city) : undefined;
+    // // block capitalizes the first letter of every word for city if it is defined
+    // bodyData.city = bodyData.city ? capitalizeFirstLetterEveryWord(bodyData.city) : undefined;
 
-    // block capitalizes the first letter of every word for state if it is defined
-    bodyData.state = bodyData.state ? capitalizeFirstLetterEveryWord(bodyData.state) : undefined;
+    // // block capitalizes the first letter of every word for state if it is defined
+    // bodyData.state = bodyData.state ? capitalizeFirstLetterEveryWord(bodyData.state) : undefined;
 
-    // block capitalizes the first letter of every word for country if it is defined
-    bodyData.country = bodyData.country ? capitalizeFirstLetterEveryWord(bodyData.country) : undefined;
+    // // block capitalizes the first letter of every word for country if it is defined
+    // bodyData.country = bodyData.country ? capitalizeFirstLetterEveryWord(bodyData.country) : undefined;
 
     // block trims data, also updates which data needs to be updateds, deletes field from set
     Object.keys(bodyData).forEach(key => {
