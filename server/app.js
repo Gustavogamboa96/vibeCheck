@@ -1,5 +1,5 @@
 const express = require('express');
-const accounts = require("./routes/accountsRoute");
+const accounts = require("./routes/usersRoute");
 const vibeCheck = require('./routes/vibeCheckRoute')
 const authentication = require("./routes/authenticationRoute");
 
