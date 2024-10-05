@@ -38,9 +38,6 @@ function dataValidation(req, res, next) {
         dataToDelete[value] = null;
     });
 
-    console.log(dataToUpdate);
-    console.log(dataToDelete);
-
     // update the request body to hold the new information for which data to update and which to delete
     req.dataToUpdate = dataToUpdate;
     req.dataToDelete = dataToDelete;
