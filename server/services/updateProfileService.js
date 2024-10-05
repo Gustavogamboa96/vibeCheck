@@ -1,6 +1,6 @@
 const { dataResponse } = require("../utils/dataResponse");
 const { updateProfileSettings } = require("../utils/updateProfileSettings");
-const usersDAO = require("../repositories/userDAO");
+const userDAO = require("../repositories/userDAO");
 
 async function updateProfile(reqUsername, dataToUpdate, dataToDelete) {
     /**
@@ -15,7 +15,7 @@ async function updateProfile(reqUsername, dataToUpdate, dataToDelete) {
         const updateSettings = updateProfileSettings(dataToUpdate, dataToDelete);
 
         // DAO layer function to update the profile based on the username
-        const response = await usersDAO.updateProfile(reqUsername, updateSettings);
+        const response = await userDAO.updateProfile(reqUsername, updateSettings);
 
         // extracting the values that should not be returned in the http response
         const { username, email, password, age, user_id, ...responseData } = response.Attributes;
