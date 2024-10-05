@@ -6,9 +6,11 @@ const { updateProfile } = require("../controllers/updateProfileController");
 
 // middleware
 const { dataValidation } = require("../middleware/updateProfileDataValidation");
+const authenticateToken = require("../middleware/authenticateToken");
+
 
 // route to update profile, expects body with info, protected route
-router.patch("/:userId", dataValidation, updateProfile);
+router.patch("/:userId", authenticateToken, dataValidation, updateProfile);
 
 
 
