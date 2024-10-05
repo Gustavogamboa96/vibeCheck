@@ -14,6 +14,12 @@ async function updateProfile(userData, dataToUpdate, dataToDelete) {
         // querying user by id using repository layer function to make sure user exist and data matches
         const returnedUser = await usersDAO.findUserById(userData.userId);
 
+        // block checks that user updating is only allowed to update his own profile
+        if (userData.user_id !== userData.userId) {
+            data.message = "sorry, you can only update your own profile";
+            return dataResponse(401, "fail", data);
+        }
+
         // block checks if user does not exists
         if (returnedUser.Count === 0) {
             data.message = "invalid user - user does not exist";

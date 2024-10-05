@@ -17,7 +17,6 @@ async function updateProfile(req, res) {
         const { ...userData } = req.user;
 
         // swapping the id in the token with the id in the route parameter
-        delete userData.user_id;
         userData["userId"] = req.params.userId;
 
         // passing info into our service layer funciton
