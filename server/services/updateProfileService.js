@@ -32,6 +32,7 @@ async function updateProfile(userData, dataToUpdate, dataToDelete) {
             return dataResponse(400, 'fail', data);
         }
 
+        // utility function to handle the updateSettings creation
         const updateSettings = updateProfileSettings(dataToUpdate, dataToDelete);
 
         const response = await usersDAO.updateProfile(userData.username, updateSettings);
