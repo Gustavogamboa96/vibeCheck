@@ -14,16 +14,10 @@ async function updateProfile(req, res) {
         // destructuring required fields
         const { ...dataToUpdate } = req.dataToUpdate;
         const { ...dataToDelete } = req.dataToDelete;
-        // const { ...userData } = req.user;
-
-        const userData = {
-            userId: "0e7ba505-b2c1-4889-a325-f19e27171be2",
-            username: "testUsername",
-            email: "testEmail@gmail.com"
-        };
+        const { username } = req.user;
 
         // passing info into our service layer funciton
-        const response = await updateProfileService(userData, dataToUpdate, dataToDelete);
+        const response = await updateProfileService(username, dataToUpdate, dataToDelete);
 
         return res.status(response.httpStatus).json({
             status: response.status,
