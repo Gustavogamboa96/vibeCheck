@@ -49,7 +49,7 @@ function loginBodyValidation(req, res, next) {
         }
 
         // constructing response
-        response = dataResponse(400, "fail", data);
+        const response = dataResponse(400, "fail", data);
 
         // returning response
         return res.status(response.httpStatus).json({
