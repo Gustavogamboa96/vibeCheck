@@ -36,7 +36,7 @@ async function updateProfile(userData, dataToUpdate, dataToDelete) {
         const updateSettings = updateProfileSettings(dataToUpdate, dataToDelete);
 
         const response = await usersDAO.updateProfile(userData.username, updateSettings);
-        console.log(response);
+        // console.log(response);
 
         data.message = "all good broh"
         return dataResponse(200, "success", data);

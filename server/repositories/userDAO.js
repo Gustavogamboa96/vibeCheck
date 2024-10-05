@@ -64,13 +64,14 @@ async function updateProfile(username, updateSettings) {
     ExpressionAttributeNames: {
       ...updateSettings.ExpressionAttributeNames
     },
-    ExpressionAttributeValues: {
-      ...updateSettings.ExpressionAttributeValues
-    },
     ReturnValues: "ALL_NEW",
   }
 
-  console.log(params);
+  // conditionally added the ExpressionAttributeValues if they are present
+  if (Object.keys(updateSettings.ExpressionAttributeValues).length !== 0) {
+    params.ExpressionAttributeValues = { ...updateSettings.ExpressionAttributeValues };
+  }
+
   // // db funciton call
   return await documentClient.send(new UpdateCommand(params));
 
