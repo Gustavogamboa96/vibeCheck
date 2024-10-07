@@ -20,3 +20,6 @@
 2024-10-04 12:56:49 [error]: Failed to update vibeCheck's likes/dislikes: Cannot read properties of undefined (reading 'liked_by')
 2024-10-04 13:00:06 [error]: Failed to update vibeCheck's likes/dislikes: Cannot read properties of undefined (reading 'liked_by')
 2024-10-04 13:00:06 [error]: Failed to update vibeCheck's likes/dislikes: Cannot read properties of undefined (reading 'liked_by')
+2024-10-07 14:04:34 [error]: Failed to create vibeCheck: review.trim is not a function
+2024-10-07 14:06:35 [error]: Failed to create vibeCheck: review.trim is not a function
+2024-10-07 14:06:53 [error]: Failed to create vibeCheck: review.trim is not a function

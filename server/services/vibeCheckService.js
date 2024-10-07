@@ -9,8 +9,16 @@ async function createVibeCheck(user_id, track_id, review, rating) {
         //check valid user_id from request
         if (user_id) {
             //check if review is not empty and rating is 1-5
+            if (typeof review !== 'string') {
+                data.message = "Review can't be non string";
+                return dataResponse(401, "fail", data);
+            }
             if (review.trim() == '') {
                 data.message = "Review can't be empty";
+                return dataResponse(401, "fail", data);
+            }
+            if (typeof rating !== 'number') {
+                data.message = "Rating can't be non number";
                 return dataResponse(401, "fail", data);
             }
             if (rating < 0 || rating >= 6) {
