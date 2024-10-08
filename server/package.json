@@ -20,6 +20,7 @@
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.662.0",
     "@aws-sdk/lib-dynamodb": "^3.662.0",
+    "@types/node": "^22.7.5",
     "aws-sdk": "^2.1691.0",
     "bcrypt": "^5.1.1",
     "dotenv": "^16.4.5",

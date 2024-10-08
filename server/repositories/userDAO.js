@@ -1,5 +1,28 @@
 const { documentClient } = require("../db/dynamoClient")
-const { QueryCommand, PutCommand, UpdateCommand } = require("@aws-sdk/lib-dynamodb")
+const { QueryCommand, PutCommand, UpdateCommand, DeleteCommand } = require("@aws-sdk/lib-dynamodb")
+
+const USERS_TABLE = "users_table";
+
+async function deleteUserById(username) {
+  /**
+   * repository layer function to delete a user from the database
+   */
+
+  try {
+    const params = {
+      TableName: USERS_TABLE,
+      Key: {
+        username: username
+
+      }
+    }
+
+    return await documentClient.send(new DeleteCommand(params));
+  } catch (error) {
+    throw new Error(error.message);
+  }
+
+}
 
 async function getUserByUsername(username) {
   /**
@@ -10,7 +33,7 @@ async function getUserByUsername(username) {
   try {
     // params for the querying condition
     const params = {
-      TableName: "users_table",
+      TableName: USERS_TABLE,
       KeyConditionExpression: "#username = :username",
       ExpressionAttributeNames: {
         "#username": "username",
@@ -32,7 +55,7 @@ async function createUser(user) {
    */
 
   const command = new PutCommand({
-    TableName: "users_table",
+    TableName: USERS_TABLE,
     Item: user,
   })
 
@@ -56,7 +79,7 @@ async function updateProfile(username, updateSettings) {
 
   // // params for db function call
   const params = {
-    TableName: "users_table",
+    TableName: USERS_TABLE,
     Key: {
       username: username
     },
@@ -88,7 +111,7 @@ async function findUserById(userId) {
 
     // params for the query function
     const params = {
-      TableName: "users_table",
+      TableName: USERS_TABLE,
       IndexName: "user_id-index",
       KeyConditionExpression: "#user_id = :userId",
       ExpressionAttributeNames: {
@@ -109,4 +132,4 @@ async function findUserById(userId) {
 
 }
 
-module.exports = { getUserByUsername, createUser, updateProfile, findUserById }
+module.exports = { getUserByUsername, createUser, updateProfile, findUserById, deleteUserById }
