@@ -3,14 +3,22 @@ const dao = require("../repositories/vibeCheckDAO");
 const uuid = require('uuid');
 const logger = require("../utils/logger");
 
-async function createVibeCheck(user_id, track_id, review, rating) {
+async function createVibeCheck(user_id, album_id, review, rating) {
     try {
         const data = {};
         //check valid user_id from request
         if (user_id) {
             //check if review is not empty and rating is 1-5
+            if (typeof review !== 'string') {
+                data.message = "Review can't be non string";
+                return dataResponse(401, "fail", data);
+            }
             if (review.trim() == '') {
                 data.message = "Review can't be empty";
+                return dataResponse(401, "fail", data);
+            }
+            if (typeof rating !== 'number') {
+                data.message = "Rating can't be non number";
                 return dataResponse(401, "fail", data);
             }
             if (rating < 0 || rating >= 6) {
@@ -23,7 +31,7 @@ async function createVibeCheck(user_id, track_id, review, rating) {
             const vibeCheck = { 
             vibe_check_id,
             user_id,
-            track_id,
+            album_id,
             review,
             rating,
             likes: 0,
