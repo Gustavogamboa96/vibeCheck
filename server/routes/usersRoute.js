@@ -3,15 +3,17 @@ const router = express.Router()
 
 // controller layer functions
 const { updateProfile } = require("../controllers/updateProfileController");
+const { deleteAccount } = require("../controllers/deleteAccountController");
 
 // middleware
 const { dataValidation } = require("../middleware/updateProfileDataValidation");
 const authenticateToken = require("../middleware/authenticateToken");
-const { checkReturnedUser } = require("../middleware/returnedUserByIdCheck");
+const { validateUser } = require("../middleware/validateUserOwnershipById");
 
 
 // route to update profile, expects body with info, protected route
-router.patch("/:userId", authenticateToken, checkReturnedUser, dataValidation, updateProfile);
+router.patch("/:userId", authenticateToken, validateUser, dataValidation, updateProfile);
+router.delete("/:userId", authenticateToken, validateUser, deleteAccount)
 
 
 

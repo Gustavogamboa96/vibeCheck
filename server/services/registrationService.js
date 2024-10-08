@@ -25,17 +25,27 @@ async function register(username, age, email, password) {
                 const saltRounds = 10
                 let hashedPassword = await bcrypt.hashSync(password, saltRounds)
                 let unique_key = uuidv4()
-                let user = await userDAO.createUser({
+                const user = await userDAO.createUser({
                     username,
                     age,
                     email,
                     password: hashedPassword,
                     user_id: unique_key,
-                })
+                });
 
-                data.message = "User created successfully"
+                const userAccount = user.user;
+
+                data.userDetails = {
+                    username: userAccount.username,
+                    age: userAccount.age,
+                    email: userAccount.email,
+                    userId: userAccount.user_id
+                }
+
+                console.log(data);
                 return dataResponse(201, "success", data)
-            } catch (createError) {
+            } catch (error) {
+                console.log(error.message);
                 data.message = "Failed to create new user"
                 return dataResponse(500, "fail", data)
             }
