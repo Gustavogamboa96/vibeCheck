@@ -161,6 +161,9 @@ async function findUserByEmail(userEmail) {
   }
 }
 
+// getAllUsernames
+
+
 module.exports = {
   getUserByUsername,
   createUser,
