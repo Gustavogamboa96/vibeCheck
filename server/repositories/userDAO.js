@@ -1,7 +1,12 @@
 const { documentClient } = require("../db/dynamoClient")
-const { QueryCommand, PutCommand, UpdateCommand, DeleteCommand } = require("@aws-sdk/lib-dynamodb")
+const {
+  QueryCommand,
+  PutCommand,
+  UpdateCommand,
+  DeleteCommand,
+} = require("@aws-sdk/lib-dynamodb")
 
-const USERS_TABLE = "users_table";
+const USERS_TABLE = "users_table"
 
 async function deleteUserById(username) {
   /**
@@ -12,16 +17,14 @@ async function deleteUserById(username) {
     const params = {
       TableName: USERS_TABLE,
       Key: {
-        username: username
-
-      }
+        username: username,
+      },
     }
 
-    return await documentClient.send(new DeleteCommand(params));
+    return await documentClient.send(new DeleteCommand(params))
   } catch (error) {
-    throw new Error(error.message);
+    throw new Error(error.message)
   }
-
 }
 
 async function getUserByUsername(username) {
@@ -71,65 +74,98 @@ async function createUser(user) {
 async function updateProfile(username, updateSettings) {
   /**
    * function to udpate data for given user by their id
-   * 
+   *
    * userId - required data
    * dataToUpdate - only present if the user changes something
-   * dataToDelete - will 
+   * dataToDelete - will
    */
 
   // // params for db function call
   const params = {
     TableName: USERS_TABLE,
     Key: {
-      username: username
+      username: username,
     },
-    UpdateExpression: updateSettings.setString + " " + updateSettings.removeString,
+    UpdateExpression:
+      updateSettings.setString + " " + updateSettings.removeString,
     ExpressionAttributeNames: {
-      ...updateSettings.ExpressionAttributeNames
+      ...updateSettings.ExpressionAttributeNames,
     },
     ReturnValues: "ALL_NEW",
   }
 
   // conditionally added the ExpressionAttributeValues if they are present
   if (Object.keys(updateSettings.ExpressionAttributeValues).length !== 0) {
-    params.ExpressionAttributeValues = { ...updateSettings.ExpressionAttributeValues };
+    params.ExpressionAttributeValues = {
+      ...updateSettings.ExpressionAttributeValues,
+    }
   }
 
   // // db funciton call
-  return await documentClient.send(new UpdateCommand(params));
-
+  return await documentClient.send(new UpdateCommand(params))
 }
 
 async function findUserById(userId) {
   /**
    * repository layer function to access db to query user by their id
-   * 
+   *
    * userId - required string
    */
 
   try {
-
     // params for the query function
     const params = {
       TableName: USERS_TABLE,
       IndexName: "user_id-index",
       KeyConditionExpression: "#user_id = :userId",
       ExpressionAttributeNames: {
-        "#user_id": "user_id"
+        "#user_id": "user_id",
       },
       ExpressionAttributeValues: {
-        ":userId": userId
-      }
+        ":userId": userId,
+      },
     }
 
     // db function call
-    return await documentClient.send(new QueryCommand(params));
-
+    return await documentClient.send(new QueryCommand(params))
   } catch (error) {
     throw new Error(error.message)
   }
-
-
 }
 
-module.exports = { getUserByUsername, createUser, updateProfile, findUserById, deleteUserById }
+async function findUserByEmail(userEmail) {
+  /**
+   * repository layer function to access db to query user by their id
+   *
+   * userId - required string
+   */
+
+  try {
+    // params for the query function
+    const params = {
+      TableName: USERS_TABLE,
+      IndexName: "email-index",
+      KeyConditionExpression: "#email = :userEmail",
+      ExpressionAttributeNames: {
+        "#email": "email",
+      },
+      ExpressionAttributeValues: {
+        ":userEmail": userEmail,
+      },
+    }
+
+    // db function call
+    return await documentClient.send(new QueryCommand(params))
+  } catch (error) {
+    throw new Error(error.message)
+  }
+}
+
+module.exports = {
+  getUserByUsername,
+  createUser,
+  updateProfile,
+  findUserById,
+  findUserByEmail,
+  deleteUserById,
+}
