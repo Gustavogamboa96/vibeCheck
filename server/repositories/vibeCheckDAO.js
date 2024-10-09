@@ -199,6 +199,15 @@ async function getItemById(vibe_check_id) {
         throw err;
     }
 }
+// TODO
+async function getItemsByUserId(){
+
+}
+async function deleteAllVibeChecksByUserId(){
+
+}
+
+
 
 
 

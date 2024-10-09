@@ -9,20 +9,24 @@ async function createVibeCheck(user_id, album_id, review, rating) {
         //check valid user_id from request
         if (user_id) {
             //check if review is not empty and rating is 1-5
-            if (typeof review !== 'string') {
-                data.message = "Review can't be non string";
+            if (typeof review !== 'string' || !review) {
+                data.message = "Review can't be non string or missing";
                 return dataResponse(401, "fail", data);
             }
             if (review.trim() == '') {
                 data.message = "Review can't be empty";
                 return dataResponse(401, "fail", data);
             }
-            if (typeof rating !== 'number') {
-                data.message = "Rating can't be non number";
+            if (typeof rating !== 'number' || !rating) {
+                data.message = "Rating can't be non number or missing";
                 return dataResponse(401, "fail", data);
             }
-            if (rating < 0 || rating >= 6) {
+            if (rating < 0 || rating >= 6 ) {
                 data.message = "Rating has to be 1-5";
+                return dataResponse(401, "fail", data);
+            }
+            if (typeof album_id !== 'object' || !album_id) {
+                data.message = "Album_id cant be non object or missing";
                 return dataResponse(401, "fail", data);
             }
 
