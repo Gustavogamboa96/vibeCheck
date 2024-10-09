@@ -35,7 +35,7 @@ async function friendRequest(userId, username) {
         // getting the response from sending a friend request
         const response = await sendFriendReuest(userId, returnedUser.Items[0].user_id);
 
-        data.message = "add good";
+        data.message = `friend request sent to ${username}`;
         return dataResponse(200, 'success', data);
     } catch (error) {
         throw new Error(error.message);

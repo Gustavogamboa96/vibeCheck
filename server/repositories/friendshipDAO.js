@@ -33,6 +33,7 @@ async function sendFriendReuest(userId, targetUserId) {
 // accepting friend
 // getting friend List
 // deleting (deny, delete friend) friend
+// handle deleting friends if they delete their account
 
 // query by your id
 // list of all the targetUserId
