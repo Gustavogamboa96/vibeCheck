@@ -15,20 +15,10 @@ async function validateUser(req, res, next) {
     // querying user by id using repository layer function to make sure user exist and data matches
     const returnedUser = await usersDAO.findUserById(userId);
 
-    // block checks that user updating is only allowed to update his own profile
-    if (userData.user_id !== userId) {
-        data.message = "sorry, you can only update your own profile";
-        const response = dataResponse(401, "fail", data);
-        return res.status(response.httpStatus).json({
-            status: response.status,
-            data
-        });
-    }
-
     if (returnedUser.Count === 0 || returnedUser.Count > 1) {
         // block checks if user does not exists, redundant check, token is still valid but the user is deleted
         if (returnedUser.Count === 0) {
-            data.message = "invalid user - user does not exist";
+            data.message = "invalid - user does not exist";
         }
 
         // block checks if more than 1 user was returned, redundant check, someone forcefully make another user in the db manually
@@ -37,6 +27,16 @@ async function validateUser(req, res, next) {
         }
 
         const response = dataResponse(400, 'fail', data);
+        return res.status(response.httpStatus).json({
+            status: response.status,
+            data
+        });
+    }
+
+    // block checks that user updating is only allowed to update his own profile
+    if (userData.user_id !== userId) {
+        data.message = "invalid - can only modify own account";
+        const response = dataResponse(401, "fail", data);
         return res.status(response.httpStatus).json({
             status: response.status,
             data
