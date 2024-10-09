@@ -11,26 +11,79 @@ function registrationBodyValidation(req, res, next) {
    */
 
   // destructuring the body
-  const { username, age, email, password } = req.body
+  const { username, email, password } = req.body
 
   // block to handle any incorrect data
   if (
     !username ||
-    !age ||
     !email ||
     !password ||
     typeof username !== "string" ||
-    typeof age !== "number" ||
     typeof email !== "string" ||
     typeof password !== "string" ||
     username.length < 7 ||
     username.length > 25 ||
     password.length < 7 ||
     password.length > 20 ||
-    age <= 0 ||
-    age > 100 ||
     !email.includes("@") ||
-    !email.includes(".com")
+    !email.includes(".com") ||
+    username.includes("<") ||
+    username.includes(">") ||
+    username.includes("[") ||
+    username.includes("]") ||
+    username.includes("{") ||
+    username.includes("}") ||
+    username.includes("(") ||
+    username.includes(")") ||
+    username.includes("=") ||
+    username.includes("|") ||
+    username.includes(":") ||
+    username.includes(";") ||
+    username.includes(",") ||
+    username.includes("+") ||
+    username.includes("*") ||
+    username.includes("?") ||
+    username.includes("%") ||
+    username.includes("&") ||
+    username.includes(" ") ||
+    password.includes("<") ||
+    password.includes(">") ||
+    password.includes("[") ||
+    password.includes("]") ||
+    password.includes("{") ||
+    password.includes("}") ||
+    password.includes("(") ||
+    password.includes(")") ||
+    password.includes("=") ||
+    password.includes("|") ||
+    password.includes(":") ||
+    password.includes(";") ||
+    password.includes(",") ||
+    password.includes("+") ||
+    password.includes("*") ||
+    password.includes("?") ||
+    password.includes("%") ||
+    password.includes("&") ||
+    password.includes(" ") ||
+    email.includes("<") ||
+    email.includes(">") ||
+    email.includes("[") ||
+    email.includes("]") ||
+    email.includes("{") ||
+    email.includes("}") ||
+    email.includes("(") ||
+    email.includes(")") ||
+    email.includes("=") ||
+    email.includes("|") ||
+    email.includes(":") ||
+    email.includes(";") ||
+    email.includes(",") ||
+    email.includes("+") ||
+    email.includes("*") ||
+    email.includes("?") ||
+    email.includes("%") ||
+    email.includes("&") ||
+    email.includes(" ")
   ) {
     let data = {}
 
@@ -48,17 +101,6 @@ function registrationBodyValidation(req, res, next) {
     else if (!password) {
       // constructing data
       data.message = "password is required"
-    }
-
-    // block if both age and email are missing
-    else if (!age && !email) {
-      // constructing data
-      data.message = "age and email are required"
-    }
-    // block for missing username
-    else if (!age) {
-      // constructing data
-      data.message = "age is required"
     }
     // block for missing password
     else if (!email) {
@@ -78,12 +120,6 @@ function registrationBodyValidation(req, res, next) {
     else if (typeof password !== "string") {
       // constructing data
       data.message = "invalid password type"
-    }
-
-    // block checks that params are valid strings
-    else if (typeof age !== "number") {
-      // constructing data
-      data.message = "invalid age type"
     }
 
     // block checks that params are valid strings
@@ -125,6 +161,75 @@ function registrationBodyValidation(req, res, next) {
     else if (!email.includes(".com")) {
       // constructing data
       data.message = "email url's must contain '.com'"
+    } else if (
+      username.includes("<") ||
+      username.includes(">") ||
+      username.includes("[") ||
+      username.includes("]") ||
+      username.includes("{") ||
+      username.includes("}") ||
+      username.includes("(") ||
+      username.includes(")") ||
+      username.includes("=") ||
+      username.includes("|") ||
+      username.includes(":") ||
+      username.includes(";") ||
+      username.includes(",") ||
+      username.includes("+") ||
+      username.includes("*") ||
+      username.includes("?") ||
+      username.includes("%") ||
+      username.includes("&") ||
+      username.includes(" ")
+    ) {
+      //constructing data
+      data.message = "Illegal characters detected"
+    } else if (
+      password.includes("<") ||
+      password.includes(">") ||
+      password.includes("[") ||
+      password.includes("]") ||
+      password.includes("{") ||
+      password.includes("}") ||
+      password.includes("(") ||
+      password.includes(")") ||
+      password.includes("=") ||
+      password.includes("|") ||
+      password.includes(":") ||
+      password.includes(";") ||
+      password.includes(",") ||
+      password.includes("+") ||
+      password.includes("*") ||
+      password.includes("?") ||
+      password.includes("%") ||
+      password.includes("&") ||
+      password.includes(" ")
+    ) {
+      //constructing data
+      data.message = "Illegal characters detected"
+    } else if (
+      email.includes("<") ||
+      email.includes(">") ||
+      email.includes("[") ||
+      email.includes("]") ||
+      email.includes("{") ||
+      email.includes("}") ||
+      email.includes("(") ||
+      email.includes(")") ||
+      email.includes("=") ||
+      email.includes("|") ||
+      email.includes(":") ||
+      email.includes(";") ||
+      email.includes(",") ||
+      email.includes("+") ||
+      email.includes("*") ||
+      email.includes("?") ||
+      email.includes("%") ||
+      email.includes("&") ||
+      email.includes(" ")
+    ) {
+      //constructing data
+      data.message = "Illegal characters detected"
     }
 
     // constructing response
