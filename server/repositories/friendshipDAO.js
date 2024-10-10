@@ -6,7 +6,7 @@ const {
     DeleteCommand,
 } = require("@aws-sdk/lib-dynamodb");
 
-const USERS_TABLE = "users_relationship_table"
+const TABLE_NAME = "users_relationship_table"
 
 async function sendFriendReuest(userId, targetUserId) {
     /**
@@ -16,7 +16,7 @@ async function sendFriendReuest(userId, targetUserId) {
      */
     try {
         const params = {
-            TableName: USERS_TABLE,
+            TableName: TABLE_NAME,
             Item: {
                 userId: userId,
                 targetUserId: targetUserId,
@@ -25,6 +25,33 @@ async function sendFriendReuest(userId, targetUserId) {
         }
 
         return await documentClient.send(new PutCommand(params));
+    } catch (error) {
+        throw new Error(error.message)
+    }
+}
+
+async function retrieveAllFriendsByStatus(userId, status) {
+    /**
+     * DAO layer function to retrieve all friends by the provided status
+     */
+    try {
+        const params = {
+            TableName: TABLE_NAME,
+            IndexName: "userId-index",
+            KeyConditionExpression: "#userId = :userId",
+            FilterExpression: " #friendStatus = :status",
+            ExpressionAttributeNames: {
+                "#userId": "userId",
+                "#friendStatus": "friendStatus"
+            },
+            ExpressionAttributeValues: {
+                ":userId": userId,
+                ":status": status
+            }
+        }
+
+        return await documentClient.send(new QueryCommand(params));
+
     } catch (error) {
         throw new Error(error.message)
     }
@@ -40,4 +67,4 @@ async function sendFriendReuest(userId, targetUserId) {
 // filter by block first
 // filter friendstatus = [pending, accepted, ]
 
-module.exports = { sendFriendReuest };
+module.exports = { sendFriendReuest, retrieveAllFriendsByStatus };

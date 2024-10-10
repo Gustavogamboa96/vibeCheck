@@ -6,6 +6,7 @@ const { updateProfile } = require("../controllers/updateProfileController");
 const { deleteAccount } = require("../controllers/deleteAccountController");
 const { sendFreindRequest } = require("../controllers/sendFriendRequestController");
 const { updateFriendRequest } = require("../controllers/updateFriendRequestController");
+const { retrieveAllFriends } = require("../controllers/retrieveAllFriendsController");
 
 // middleware
 const { dataValidation } = require("../middleware/updateProfileDataValidation");
@@ -21,6 +22,9 @@ router.delete("/:userId", authenticateToken, validateUser, deleteAccount);
 router.post("/:userId/friends", authenticateToken, validateUser, sendFreindRequest);
 // route to handle the accepting/denying friend request, expects either accept/deny in the body
 router.patch("/:userId/friends", authenticateToken, validateUser, updateFriendRequest);
+// route to handle filtering for friends by either accepted/pending, should contain a query param (status)
+// by default its accepted
+router.get("/:userId/friends", authenticateToken, validateUser, retrieveAllFriends)
 
 
 
