@@ -18,9 +18,28 @@ async function retrieveAllFriendsByStatus(userId, status) {
 
         // DAO layer function to get all friends by status
         const retrievedData = await friendShipDAO.retrieveAllFriendsByStatus(userId, status);
-        console.log(retrievedData);
+        // console.log(retrievedData);
 
-        data.message = "all gucci";
+        // block to handle if no data is present
+        if (retrievedData.Count === 0) {
+            data.message = `no friends with status: ${status}`;
+            return dataResponse(200, 'success', data);
+        }
+
+        // this is will handle the collection of users
+        data.friendList = [];
+
+        // block to return the friends returned
+        retrievedData.Items.map(itemObj => {
+            const friendObj = {
+                userId: itemObj.targetUserId,
+                friendStatus: itemObj.friendStatus
+            }
+
+            data.friendList.push(friendObj);
+        })
+
+        data.message = `${retrievedData.Count} items found with status ${status}`;
         return dataResponse(200, 'success', data);
     } catch (error) {
         throw new Error(error.message);
