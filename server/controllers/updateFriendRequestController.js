@@ -8,10 +8,10 @@ async function updateFriendRequest(req, res) {
      * status - will be validated in middleware/service layer function
      */
     try {
-        const { user_id: userId } = req.user;
+        const { user_id: userId, username } = req.user;
         const { status, targetUsername } = req.body;
 
-        const response = await friendRequestUpdate(userId, targetUsername, status);
+        const response = await friendRequestUpdate(userId, username, targetUsername, status);
 
         // responding to client with object data
         res.status(response.httpStatus).json({

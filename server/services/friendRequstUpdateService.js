@@ -2,7 +2,7 @@ const { dataResponse } = require("../utils/dataResponse");
 const friendShipDAO = require("../repositories/friendshipDAO");
 const userDAO = require("../repositories/userDAO");
 
-async function friendRequestUpdate(userId, targetUsername, status) {
+async function friendRequestUpdate(userId, username, targetUsername, status) {
     /**
      * service layer function to handle updating a friend request
      * 
@@ -48,15 +48,14 @@ async function friendRequestUpdate(userId, targetUsername, status) {
 
         // block accepts the friend request
         if (status === "accepted") {
-            await friendShipDAO.acceptFriendRequest(userId, targetUserId);
-            await friendShipDAO.sendFriendReuest(userId, targetUserId, "accepted");
+            await friendShipDAO.acceptFriendRequest(userId, targetUserId, username, targetUsername);
+            await friendShipDAO.sendFriendReuest(userId, targetUserId, username, targetUsername, "accepted");
             data.message = "friend request accepted";
-            return dataResponse(204, "accepted", data);
+            return dataResponse(200, "success", data);
         }
 
-        // block handles the denying of the friend request
+        // block handles the denying of the friend request and removing the request from the database
         if (status === "denied") {
-            console.log("denied");
             await friendShipDAO.deleteFriend(userId, targetUserId);
             await friendShipDAO.deleteFriend(targetUserId, userId);
             data.message = "friend request denied";

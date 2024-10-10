@@ -10,11 +10,11 @@ async function sendFriendRequest(req, res) {
 
     try {
         // destructuring required variables
-        const { userId } = req.params;
-        const { username } = req.body;
+        const { user_id: userId, username } = req.user;
+        const { username: targetUsername } = req.body;
 
         // calling the service layer friend request
-        const response = await friendRequest(userId, username);
+        const response = await friendRequest(userId, username, targetUsername);
 
         // responding to client with object data
         return res.status(response.httpStatus).json({

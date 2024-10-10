@@ -32,8 +32,7 @@ async function retrieveAllFriendsByStatus(userId, status) {
         // block to return the friends returned
         retrievedData.Items.map(itemObj => {
             const friendObj = {
-                userId: itemObj.targetUserId,
-                friendStatus: itemObj.friendStatus
+                ...itemObj
             }
 
             data.friendList.push(friendObj);

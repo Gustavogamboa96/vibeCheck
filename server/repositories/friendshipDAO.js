@@ -8,7 +8,7 @@ const {
 
 const TABLE_NAME = "users_relationship_table"
 
-async function sendFriendReuest(userId, targetUserId, friendStatus = "pending") {
+async function sendFriendReuest(userId, targetUserId, username, targetUsername, friendStatus = "pending") {
     /**
      * DAO layer function to handle the sending of a friend request
      * can also be used to linked two friends
@@ -25,7 +25,9 @@ async function sendFriendReuest(userId, targetUserId, friendStatus = "pending") 
             Item: {
                 userId: userId,
                 targetUserId: targetUserId,
-                friendStatus: friendStatus
+                friendStatus: friendStatus,
+                username: username,
+                targetUsername: targetUsername
             }
         }
 
