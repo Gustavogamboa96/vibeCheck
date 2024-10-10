@@ -2,6 +2,7 @@ const { dataResponse } = require("../utils/dataResponse");
 const dao = require("../repositories/vibeCheckDAO");
 const uuid = require('uuid');
 const logger = require("../utils/logger");
+const userDao = require("../repositories/userDAO");
 
 async function createVibeCheck(user_id, album_id, review, rating) {
     try {
@@ -218,4 +219,34 @@ async function likeOrDislike(user_id, vibe_check_id, type) {
     }
 }
 
-module.exports = { createVibeCheck, getVibeCheckById, getAllVibeChecks, deleteVibeCheck, likeOrDislike };
+async function getVibeChecksByUserId(user_id, target_user_id){
+    try{
+        const data = {};
+        if(user_id){
+        if(target_user_id){
+            const checkIdExists = await userDao.findUserById(target_user_id);
+            if(checkIdExists.Items.length === 0){
+                data.message = 'No user was found with that id';
+                return dataResponse(401, "fail", data);
+            }
+            const returnedVibeChecks = await dao.getItemsByUserId(target_user_id);
+            if (returnedVibeChecks.Count === 0 || returnedVibeChecks.Items.length === 0) {
+                data.message = "VibeChecks for target_user_id couldn't be retrieved";
+                return dataResponse(401, "fail", data);
+            }
+            data.returnedVibeChecks = returnedVibeChecks.Items;
+            return dataResponse(200, "success", data);
+        }
+        }else {
+            data.message = 'No user_id was passed, might have to refresh session';
+            return dataResponse(401, "fail", data);
+        }
+    }catch(error){
+        logger.error(`Failed to get user's VibeChecks: ${error.message}`, {
+            stack: error.stack,
+        });
+        throw new Error(error.message);
+    }
+}
+
+module.exports = { createVibeCheck, getVibeCheckById, getAllVibeChecks, deleteVibeCheck, likeOrDislike, getVibeChecksByUserId };
