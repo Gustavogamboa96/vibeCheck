@@ -62,6 +62,63 @@ async function retrieveAllFriendsByStatus(userId, status) {
     }
 }
 
+async function findFriendRequest(userId, targetUserId, status = "pending") {
+    /**
+     * DAO layer function to retrieve all friends by the provided status
+     */
+    try {
+        const params = {
+            TableName: TABLE_NAME,
+            KeyConditionExpression: "#userId = :targetUserId  AND #targetUserId = :userId",
+            FilterExpression: " #friendStatus = :status",
+            ExpressionAttributeNames: {
+                "#userId": "userId",
+                "#targetUserId": "targetUserId",
+                "#friendStatus": "friendStatus"
+            },
+            ExpressionAttributeValues: {
+                ":userId": userId,
+                ":targetUserId": targetUserId,
+                ":status": status
+            }
+        }
+
+        return await documentClient.send(new QueryCommand(params));
+
+    } catch (error) {
+        throw new Error(error.message)
+    }
+}
+
+async function acceptFriendRequest(userId, targetUserId) {
+    /**
+     * DAO layer function to update a friend request from pending to accepted
+     * 
+     * 
+     */
+
+    try {
+        const params = {
+            TableName: TABLE_NAME,
+            Key: {
+                userId: targetUserId,
+                targetUserId: userId
+            },
+            UpdateExpression: "SET #friendStatus = :acceptedStatus",
+            ExpressionAttributeNames: {
+                "#friendStatus": "friendStatus"
+            },
+            ExpressionAttributeValues: {
+                ":acceptedStatus": "accepted"
+            },
+            ReturnValues: "ALL_NEW",
+        }
+
+        return await documentClient.send(new UpdateCommand(params));
+    } catch (error) {
+        throw new Error(error.message)
+    }
+}
 // accepting friend
 // getting friend List
 // deleting (deny, delete friend) friend
@@ -72,4 +129,4 @@ async function retrieveAllFriendsByStatus(userId, status) {
 // filter by block first
 // filter friendstatus = [pending, accepted, ]
 
-module.exports = { sendFriendReuest, retrieveAllFriendsByStatus };
+module.exports = { sendFriendReuest, retrieveAllFriendsByStatus, findFriendRequest, acceptFriendRequest };

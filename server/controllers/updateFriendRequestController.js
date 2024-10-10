@@ -1,5 +1,5 @@
 const { errorResponse } = require("../utils/errorResponse");
-const { friendRequstUpdate } = require("../services/friendRequstUpdateService")
+const { friendRequestUpdate } = require("../services/friendRequstUpdateService")
 
 async function updateFriendRequest(req, res) {
     /**
@@ -8,10 +8,10 @@ async function updateFriendRequest(req, res) {
      * status - will be validated in middleware/service layer function
      */
     try {
-        const { userId } = req.params;
-        const { status } = req.body;
+        const { user_id: userId } = req.user;
+        const { status, targetUsername } = req.body;
 
-        const response = await friendRequstUpdate(userId, status);
+        const response = await friendRequestUpdate(userId, targetUsername, status);
 
         // responding to client with object data
         res.status(response.httpStatus).json({
