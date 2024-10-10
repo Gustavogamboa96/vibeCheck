@@ -50,15 +50,18 @@ async function friendRequestUpdate(userId, targetUsername, status) {
         if (status === "accepted") {
             await friendShipDAO.acceptFriendRequest(userId, targetUserId);
             await friendShipDAO.sendFriendReuest(userId, targetUserId, "accepted");
+            data.message = "friend request accepted";
+            return dataResponse(204, "accepted", data);
         }
 
         // block handles the denying of the friend request
-        // if (status === "denied") { }
-
-        // block checks to make sure that a friend requests exists in the database
-
-        data.message = "add goooooood";
-        return dataResponse(200, 'success', data);
+        if (status === "denied") {
+            console.log("denied");
+            await friendShipDAO.deleteFriend(userId, targetUserId);
+            await friendShipDAO.deleteFriend(targetUserId, userId);
+            data.message = "friend request denied";
+            return dataResponse(200, "accepted", data);
+        }
 
     } catch (error) {
         throw new Error(error.message);

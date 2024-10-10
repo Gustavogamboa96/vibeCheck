@@ -119,6 +119,27 @@ async function acceptFriendRequest(userId, targetUserId) {
         throw new Error(error.message)
     }
 }
+
+async function deleteFriend(userId, targetUserId) {
+    /**
+     * DAO layer to delete a friend request or friend from database
+     * 
+     */
+
+    try {
+        const params = {
+            TableName: TABLE_NAME,
+            Key: {
+                userId: userId,
+                targetUserId: targetUserId,
+            }
+        }
+
+        return await documentClient.send(new DeleteCommand(params));
+    } catch (error) {
+        throw new Error(error.message)
+    }
+}
 // accepting friend
 // getting friend List
 // deleting (deny, delete friend) friend
@@ -129,4 +150,4 @@ async function acceptFriendRequest(userId, targetUserId) {
 // filter by block first
 // filter friendstatus = [pending, accepted, ]
 
-module.exports = { sendFriendReuest, retrieveAllFriendsByStatus, findFriendRequest, acceptFriendRequest };
+module.exports = { sendFriendReuest, retrieveAllFriendsByStatus, findFriendRequest, acceptFriendRequest, deleteFriend };
