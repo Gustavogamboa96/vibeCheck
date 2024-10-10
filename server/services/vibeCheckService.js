@@ -249,4 +249,27 @@ async function getVibeChecksByUserId(user_id, target_user_id){
     }
 }
 
-module.exports = { createVibeCheck, getVibeCheckById, getAllVibeChecks, deleteVibeCheck, likeOrDislike, getVibeChecksByUserId };
+async function deleteAllVibeChecksByUserId(user_id){
+    try{
+        const data = {};
+        if(user_id){
+            const vibeChecks = await getVibeChecksByUserId(user_id);
+            const vibeCheckIds = vibeChecks.data.returnedVibeChecks
+                                .forEach(vc => {
+                                    return { vibe_check_id: vc.vibe_check_id };
+                                });
+            data.batchResult = await dao.batchDeleteVibeChecks(vibeCheckIds);
+            return dataResponse(200, "success", data)
+        }else {
+        data.message = 'No user_id was passed, might have to refresh session';
+        return dataResponse(401, "fail", data);
+        }
+    } catch(error) {
+        logger.error(`Failed to delete user's VibeChecks: ${error.message}`, {
+            stack: error.stack,
+        });
+        throw new Error(error.message);
+    }    
+}
+
+module.exports = { createVibeCheck, getVibeCheckById, getAllVibeChecks, deleteVibeCheck, likeOrDislike, getVibeChecksByUserId, deleteAllVibeChecksByUserId };
