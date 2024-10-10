@@ -1,6 +1,6 @@
 const { errorResponse } = require("../utils/errorResponse");
 const { friendRequest } = require("../services/sendFriendRequestService");
-async function sendFreindRequest(req, res) {
+async function sendFriendRequest(req, res) {
     /**
      * controller layer function to send a friend request to another user
      * 
@@ -32,4 +32,4 @@ async function sendFreindRequest(req, res) {
 
 }
 
-module.exports = { sendFreindRequest }
+module.exports = { sendFriendRequest }
